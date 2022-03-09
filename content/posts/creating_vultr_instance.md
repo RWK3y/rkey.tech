@@ -5,7 +5,7 @@ draft: false
 description: Creating_Instance
 ---
 
-Matching blog post to [Build Opekkt Tech](/docs/vps_migration/creating_vultr_instance) in [Docs](/docs/)
+Matching blog post to [Creating Vultr Instance](/docs/vps_migration/creating_vultr_instance) in [Docs](/docs/)
 
 ### Creating instance at Vultr & setting up DNS
 
