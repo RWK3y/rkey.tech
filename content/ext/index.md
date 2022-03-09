@@ -7,6 +7,6 @@ sharingLinks: false
 showAuthor: false
 ---
 
-1. Personal productivity platform <a href="https://nc.opekkt.tech/" target="_blank">NC.RKey.Tech</a>
-2. MKDocs site <a href="https://titania.opekkt.tech/" target="_blank">Docs.RKey.Tech</a>
-3. Personal blog <a href="https://blog.rkey.tech/" target="_blank">Blog.RKey.Tech</a>
+1. Personal productivity platform <a href="https://nc.rkey.tech/" target="_blank">nc.rkey.tech</a>
+2. MKDocs site <a href="https://titania.rkey.tech/" target="_blank">docs.rkey.tech</a>
+3. Personal blog <a href="https://r0bwk3y.com/" target="_blank">r0bwk3y.com</a>
