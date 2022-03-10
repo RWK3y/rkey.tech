@@ -37,11 +37,10 @@ showScrollToTop = true
   showTableOfContents = false
   showTaxonomies = false
   showWordCount = false
-  # sharingLinks = ["facebook", "twitter", "pinterest", "reddit", "linkedin", "email"]
-   sharingLinks = ["facebook", "twitter", "reddit", "linkedin", "email"]
+   sharingLinks = ["facebook", "twitter", "pinterest", "reddit", "linkedin", "email"]
 
 [list]
-  showBreadcrumbs = false
+  showBreadcrumbs = true
   showSummary = false
   showTableOfContents = false
   groupByYear = true
