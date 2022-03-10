@@ -23,7 +23,7 @@ When Vultr sets up initial DNS entry you select the instance to point it to and 
 
 At DO I had a mixed setup I had a Caddy server that ran on the host, not in a jail breaking all my own rules. Then I had another server running only jails, which consisted of a WIKI and a couple of Ghost blogs. Everything else was just files in a directory on the host running the Caddy server. So my initial migration was just from an instance on Digital Ocean to Vultr running at the host level. Since I deploy static web sites via rsync from my **_Archlabs_** workstation at home I simply added the new host to my script and deployed to both instances for rkey.tech and r0bwk3y.com
 
-Of course prior to rsyncing things over and with any new VPS I generally do two things first.
+Of course prior to syncing things over and with any new VPS I generally do two things first.
 
 1. I turn off password login in ssh. Since I keep my public ID at DO and Vultr and Linode for that matter. when I create a VPS the first thing I do is add a new user, then I rsync my keys over from root that the VPS provider added when I created the instance to my user account.
 

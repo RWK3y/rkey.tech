@@ -27,7 +27,7 @@ go version go1.17.7 linux/amd64
 bsh ➜  hugo mod init rkey.tech
 ```
 
-I initially tried to use the recommended method for the Congo theme which was to create a module.toml file under config/_default and start the Hugo server. This appeared to work and the screen even said it was pulling the repository but after starting Hugo server I had no themes/congo directory or files. Maybe this is normal and it pulls the repository each time Hugo starts, but being a gnubie with Hugo I like to feel and touch my files, even if they are just for themeing. So instead I went the submodule route, which is what I have been doing with all previous themes.
+I initially tried to use the recommended method for the Congo theme which was to create a module.toml file under config/_default and start the Hugo server. This appeared to work and the screen even said it was pulling the repository but after starting Hugo server I had no themes/congo directory or files. Maybe this is normal and it pulls the repository each time Hugo starts, but being a gnubie with Hugo I like to feel and touch my files, even if they are just for theming. So instead I went the submodule route, which is what I have been doing with all previous themes.
 
 ```
 bsh ➜  git submodule add -b stable https://github.com/jpanther/congo.git themes/congo
@@ -77,7 +77,7 @@ Modified params.toml and made the following changes from defaults
 bsh ➜  cat params.toml
 # -- Theme Options --
 # These options control how the theme functions and allow you to
-# customise the display of your website.
+# customize the display of your website.
 colorScheme = "slate"
 defaultAppearance = "dark" # valid options: light or dark
 autoSwitchAppearance = true
@@ -87,8 +87,7 @@ enableCodeCopy = true
 [homepage]
   layout = "page" # valid options: page, profile, custom
   showRecent = false
-  # sharingLinks = ["facebook", "twitter", "pinterest", "reddit", "linkedin", "email"]
-   sharingLinks = ["facebook", "twitter", "reddit", "linkedin", "email"]
+   sharingLinks = ["facebook", "twitter", "pinterest", "reddit", "linkedin", "email"]
 ```
 
 I then modified the menus.en.toml. I like for my tags to be displayed in the footer not the header.
