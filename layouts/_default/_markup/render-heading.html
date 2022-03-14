@@ -1,1 +1,21 @@
-<h{{ .Level }} id="{{ .Anchor | safeURL }}" class="relative group">{{ .Text | safeHTML }} {{ if .Page.Params.showHeadingAnchors | default (.Page.Site.Params.article.showHeadingAnchors | default true) }}<span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#{{ .Anchor | safeURL }}" aria-label="{{ i18n "article.anchor_label" }}">#</a></span>{{ end }}</h{{ .Level }}>
+{{- $showAnchor := (and (default true .Page.Params.GeekdocAnchor) (default true .Page.Site.Params.GeekdocAnchor)) -}}
+
+
+<!-- prettier-ignore-start -->
+{{- if $showAnchor -}}
+<div class="gdoc-page__anchorwrap">
+    <h{{ .Level }} id="{{ .Anchor | safeURL }}">
+        {{ .Text | safeHTML }}
+        <a data-clipboard-text="{{ .Page.Permalink }}#{{ .Anchor | safeURL }}" class="gdoc-page__anchor gdoc-page__anchor--right clip" title="{{ i18n "title_anchor_prefix" }} {{ .Text | safeHTML }}" aria-label="{{ i18n "title_anchor_prefix" }} {{ .Text | safeHTML }}" href="#{{ .Anchor | safeURL }}">
+            <svg class="icon gdoc_link"><use xlink:href="#gdoc_link"></use></svg>
+        </a>
+    </h{{ .Level }}>
+</div>
+{{- else -}}
+<div class="gdoc-page__anchorwrap">
+    <h{{ .Level }} id="{{ .Anchor | safeURL }}">
+        {{ .Text | safeHTML }}
+    </h{{ .Level }}>
+</div>
+{{- end -}}
+<!-- prettier-ignore-end -->

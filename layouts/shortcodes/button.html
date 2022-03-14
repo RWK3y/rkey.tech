@@ -1,8 +1,27 @@
-<a
-  class="px-4 py-2 !text-neutral !no-underline !rounded-md bg-primary-600 hover:!bg-primary-500 dark:bg-primary-800 dark:hover:!bg-primary-700"
-  {{ with .Get "href" }}href="{{ . }}"{{ end }}
-  {{ with .Get "target" }}target="{{ . }}"{{ end }}
-  role="button"
->
-  {{ .Inner }}
-</a>
+{{ $ref := "" }}
+{{ $target := "" }}
+{{ $size := default "regular" (.Get "size" | lower) }}
+
+{{ if not (in (slice "regular" "large") $size) }}
+  {{ $size = "regular" }}
+{{ end }}
+
+{{ with .Get "href" }}
+  {{ $ref = . }}
+  {{ $target = "_blank" }}
+{{ end }}
+
+{{ with .Get "relref" }}
+  {{ $ref = relref $ . }}
+{{ end }}
+
+
+<span class="gdoc-button gdoc-button--{{ $size }}{{ with .Get "class" }}{{ . }}{{ end }}">
+  <a
+    {{ with $ref }}href="{{ . }}"{{ end }}
+    {{ with $target }}target="{{ . }}"{{ end }}
+    class="gdoc-button__link"
+  >
+    {{ $.Inner }}
+  </a>
+</span>

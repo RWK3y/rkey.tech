@@ -18,13 +18,13 @@ Setup Bastille to start at boot:
 ```
 doas sysrc bastille_enable=YES
 ```
-I only have one IP, so I use local loop back: 
+I only have one IP, so I use local loop back:
 ```
 doas sysrc cloned_interfaces+=lo1
 doas sysrc ifconfig_lo1_name="bastille0"
 doas service netif cloneup
 ```
-I use Packet Filter firewall so here is my initial /etc/pf.conf: Before moving into the jails. 
+I use Packet Filter firewall so here is my initial /etc/pf.conf: Before moving into the jails.
 ```
 ext_if="vtnet0"
 
@@ -44,20 +44,20 @@ pass in inet proto tcp from any to any port 80 flags S/SA keep state
 pass in inet proto tcp from any to any port 443 flags S/SA keep state
 pass in inet proto udp from any to any port 51820
 ```
-I'm still using the host at this point so I have to allow ports: 80, 443, 22 and port 51820 is my WireGuard VPN to proxy to my NextCloud instance in a jail on a server running in my apartment. 
+I'm still using the host at this point so I have to allow ports: 80, 443, 22 and port 51820 is my WireGuard VPN to proxy to my NextCloud instance in a jail on a server running in my apartment.
 
 With pf configured set it to auto start on boot and fire it up:
 ```
 doas sysrc pf_enable=YES
 doas service pf start
 ```
-At this point we get a TCP socket error and our connection drops, so we have to ssh back in. 
+At this point we get a TCP socket error and our connection drops, so we have to ssh back in.
 
 Now it's time to bootstrap Bastille:
 ```
 doas bastille bootstrap 13.0-RELEASE update
 ```
-I will be moving Caddy into a jail and also running NextCloud in a jail on my VPS instead of at home and also I will have a jail for my database server that NextCloud uses. 
+I will be moving Caddy into a jail and also running NextCloud in a jail on my VPS instead of at home and also I will have a jail for my database server that NextCloud uses.
 ```
 doas bastille create database 13.0-RELEASE 10.10.10.2
 doas bastille create nextcloud 13.0-RELEASE 10.10.10.3
@@ -72,7 +72,7 @@ bsh ➜  doas bastille list
  nextcloud       10.10.10.3      nextcloud                     /usr/local/bastille/jails/nextcloud/root
  ```
  I'm going to do some cheating here just to show ***how awesome jails are.*** Instead of building from scratch I will simply tar my database and nextcloud from my home server to the cloud and then I will simply tar all the websites and the Caddyfile from the host to the jail. Then modify pf and ssh reboot and everything will come up in jails on the VPS. This method which I did not use the first time worked so well I did not even have to turn off my up time monitor and there was no downtime beyond a second for the reboot. ***This is so freaking awesome so here we go:***
- 
+
  First I will tar up my database and nextcloud jails on my home server
  ```
  doas su
@@ -80,14 +80,14 @@ bsh ➜  doas bastille list
  tar cvf ~/database.tar database
  tar cvf ~/nextcloud.tar nextcloud
  ```
- You should shut down each jail before taring up the jails. I just turned off syncing on my iPhone and paused DAVX on my android to limit any activity. I also logged out of all web instances I had on NextCloud. (I wanted to see if I could do this with no down time, obviously on a business system I would have maintenance window and shut things down). I moved these files to regular user and change permissions. 
-I then just scp the files to the VPS instance. 
+ You should shut down each jail before taring up the jails. I just turned off syncing on my iPhone and paused DAVX on my android to limit any activity. I also logged out of all web instances I had on NextCloud. (I wanted to see if I could do this with no down time, obviously on a business system I would have maintenance window and shut things down). I moved these files to regular user and change permissions.
+I then just scp the files to the VPS instance.
 ```
 cd
 scp database.tar titania:~/
 scp nextcloud.tar titania:~/
 ```
-ssh into cloud instance and reverse the process. 
+ssh into cloud instance and reverse the process.
 ```
 ssh titania
 doas su
@@ -97,7 +97,7 @@ cd /usr/local/bastille/jails/
 tar xvf /home/user/database.tar
 tar xvf /home/user/nextcloud.tar
 ```
-Create regular user in caddy jail and setup SSH for deploying websites from workstation. 
+Create regular user in caddy jail and setup SSH for deploying websites from workstation.
 ```
 doas bastille console caddy
 pkg update
@@ -111,8 +111,8 @@ Enable ssh for caddy jail
 ```
 doas bastille sysrc caddy sshd_enable="YES"
 ```
-It will start when we reboot we do not need to start it yet. 
-We want to copy the web sites and the Caddyfile into the jail also we need our SSH key. 
+It will start when we reboot we do not need to start it yet.
+We want to copy the web sites and the Caddyfile into the jail also we need our SSH key.
 ```
 doas rsync /home/user/ /usr/local/bastille/jails/caddy/root/home/user/
 doas rsync /usr/local/etc/caddy/ /usr/local/bastille/jails/caddy/root/usr/local/etc/caddy/
@@ -122,7 +122,7 @@ The file permissions for the regular user in caddy will need to be fixed
 doas bastille console caddy
 chown -R user:group /home/user
 ```
-Also since I am no longer using the WireGuard VPN to hit the Nextcloud instance at home I will need to change the Cadddy File in the caddy jail to reflect this. 
+Also since I am no longer using the WireGuard VPN to hit the Nextcloud instance at home I will need to change the Caddy File in the caddy jail to reflect this.
 ```
 vi /usr/local/etc/caddy/Caddyfile
 ```
@@ -161,9 +161,9 @@ nc.rkey.tech {
         }
 }
 ```
-10.20.10.2:80 was the WireGuard to home and 10.10.10.3:80 is now the NextCloud jail locally. 
-For ease of use and habit I'm keeping the jail at the standard SSH port for deployments and so I will need to change the host port.  So back on the host I make the following changes. 
-I change the /etc/ssh/sshd_config file. 
+10.20.10.2:80 was the WireGuard to home and 10.10.10.3:80 is now the NextCloud jail locally.
+For ease of use and habit I'm keeping the jail at the standard SSH port for deployments and so I will need to change the host port.  So back on the host I make the following changes.
+I change the /etc/ssh/sshd_config file.
 From:
 ```
 #Port 22
@@ -193,6 +193,6 @@ pass in inet proto tcp from any to any port 5000 flags S/SA keep state
 ```
 At this point I say "Hold onto your butts" and reboot the VPS instance.
 
-Within about a second I browse to <a href="https://rkey.tech/" target="_blank">rkey.tech</a>, <a href="https://r0bwk3y.com/" target="_blank">r0bwk3y.com</a> and <a href="https://nc.rkey.tech/" target="_blank">nc.rkey.tech</a> and all 3 sites were up and operational. I then ssh into the host ```ssh -p 5000 titania``` and then ssh into the jail ```ssh caddy``` and this all worked as well. 
+Within about a second I browse to <a href="https://rkey.tech/" target="_blank">rkey.tech</a>, <a href="https://r0bwk3y.com/" target="_blank">r0bwk3y.com</a> and <a href="https://nc.rkey.tech/" target="_blank">nc.rkey.tech</a> and all 3 sites were up and operational. I then ssh into the host ```ssh -p 5000 titania``` and then ssh into the jail ```ssh caddy``` and this all worked as well.
 
 Then I jumped out of my char and screamed "Holy fucking Shit!!!" Yeah, I was surprised it worked.  There were a lot of moving pieces and not shutting down before taring up a jail, hell using tar instead of bastille export for that matter. So many configs to make typos on. Yes I'm a happy camper :)

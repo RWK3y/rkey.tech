@@ -3,6 +3,8 @@ title: Setup GitLab Repo
 date: 2022-03-03T12:35:11.000Z
 draft: false
 description: Setup GitLab Repo
+type: "posts"
+geekdocHidden: true
 ---
 
 Matching blog post for [Setup GitLab Repo](/docs/setuprepo) in [Docs](/docs/)

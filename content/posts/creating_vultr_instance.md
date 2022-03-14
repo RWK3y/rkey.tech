@@ -2,7 +2,9 @@
 title: Creating Vultr Instance
 date: 2022-03-08T14:59:36.000Z
 draft: false
-description: Creating_Instance
+description: Creating Vultr Instance
+type: "posts"
+geekdocHidden: true
 ---
 
 Matching blog post to [Creating Vultr Instance](/docs/vps_migration/creating_vultr_instance) in [Docs](/docs/)
@@ -11,9 +13,9 @@ Matching blog post to [Creating Vultr Instance](/docs/vps_migration/creating_vul
 
 I initially created a "High Frequency" instance running FreeBSD 13 with 32GB NVMe, 1 vCores, 1G ram and 1GB bandwidth For testing. But my testing quickly became live and so I upgraded to 2 vCores, 80GB NVMe, 2GB RAM and 3 GB bandwidth.
 
-![](https://titania.rkey.tech/img/titania.webp)
+![](https://titania.opekkt.tech/img/titania.webp)
 
-Before the upgrade, I migrated my test only domain bootstraps.tech over from Digital Ocean to Vultr. My domains are over at HostGator, so moving the domains simply meant that I created DNS entries for boostraps.tech, rkey.tech and r0bwk3y.com at Vultr and then point HostGator from Digital Ocean to Vultr. I use ProtonMail for my mail servers so I have to plug that into those DNS entries as well. One thing I see missing on many web sites is CAA entries. I always add CAA entries to my DNS configuration.
+Before the upgrade, I migrated my test only domain bootstraps.tech over from Digital Ocean to Vultr. My domains are over at HostGator, so moving the domains simply meant that I created DNS entries for boostraps.tech, opekkt.tech and opekktar.online at Vultr and then point HostGator from Digital Ocean to Vultr. I use ProtonMail for my mail servers so I have to plug that into those DNS entries as well. One thing I see missing on many web sites is CAA entries. I always add CAA entries to my DNS configuration.
 
 #### I use a Caddy server that auto-magically takes care of my SSL certs for me. I like lazy solutions that work.
 
@@ -23,7 +25,7 @@ When Vultr sets up initial DNS entry you select the instance to point it to and 
 
 At DO I had a mixed setup I had a Caddy server that ran on the host, not in a jail breaking all my own rules. Then I had another server running only jails, which consisted of a WIKI and a couple of Ghost blogs. Everything else was just files in a directory on the host running the Caddy server. So my initial migration was just from an instance on Digital Ocean to Vultr running at the host level. Since I deploy static web sites via rsync from my **_Archlabs_** workstation at home I simply added the new host to my script and deployed to both instances for rkey.tech and r0bwk3y.com
 
-Of course prior to syncing things over and with any new VPS I generally do two things first.
+Of course prior to synching things over and with any new VPS I generally do two things first.
 
 1. I turn off password login in ssh. Since I keep my public ID at DO and Vultr and Linode for that matter. when I create a VPS the first thing I do is add a new user, then I rsync my keys over from root that the VPS provider added when I created the instance to my user account.
 
@@ -43,4 +45,4 @@ My other web sites are just directories named after the web site so `rkey.tech` 
 
 Later on when I migrated NextCloud from a home server to the cloud and even migrated my Caddy to a jail, things did not feel as much like child's play. Nor did I do so without taking hits on my up-time monitor.
 
-#### Yes, Yes, I know the status page says 100% as of today 8-March-22. But it was a migration and I should have paused the monitors anyway. So I feel justified in resetting the counters :)
+#### Yes, Yes, I know the status page says 100% as of today 8-March-22\. But it was a migration and I should have paused the monitors anyway. So I feel justified in resetting the counters :)
